@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT English — Подготовка</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-mark">IT/EN</div>
+      <div class="logo-title">
+        <div class="serif">English for Information Technology</div>
+        <div class="mono">подготовка к контрольному / v1.0</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <section id="screen-home" class="screen">
+    <div class="hero">
+      <div class="hero-eyebrow mono">три модуля · по материалам преподавателя</div>
+      <h1 class="serif">Выучи термины так,<br>чтобы они остались.</h1>
+      <p class="section-subtitle">Три способа повторения: определения, переводы, аббревиатуры. Каждый — с тренировкой активного вспоминания. Прогресс по сессии сохраняется в памяти браузера до перезагрузки.</p>
+    </div>
+
+    <div class="modes">
+      <button class="mode-card" id="go-definitions">
+        <div class="mode-num mono">01</div>
+        <div class="mode-title serif">Определения</div>
+        <div class="mode-desc">Английские определения 14 тем. Flashcards с активным вспоминанием, fill-in-the-blank по ключевым словам, и просмотр всего списка.</div>
+        <div class="mode-count mono"><span id="count-defs">…</span> определений</div>
+      </button>
+
+      <button class="mode-card" id="go-translation">
+        <div class="mode-num mono">02</div>
+        <div class="mode-title serif">Перевод</div>
+        <div class="mode-desc">EN ↔ RU. Лёгкий режим — 4 варианта на выбор. Сложный — ввод вручную с гибким сравнением (опечатки прощаются).</div>
+        <div class="mode-count mono"><span id="count-trans">…</span> пар</div>
+      </button>
+
+      <button class="mode-card" id="go-abbreviation">
+        <div class="mode-num mono">03</div>
+        <div class="mode-title serif">Аббревиатуры</div>
+        <div class="mode-desc">Расшифровка: 2FA, RAM, SaaS, VPN и др. Два уровня сложности — выбор или ввод полной формы.</div>
+        <div class="mode-count mono"><span id="count-abbr">…</span> аббревиатур</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TRANSLATION CONFIG ============ -->
+  <section id="screen-translation-config" class="screen hidden">
+    <div class="section-header">
+      <div class="hero-eyebrow mono">модуль 02 · настройка</div>
+      <h2 class="serif section-title">Перевод</h2>
+      <p class="section-subtitle">25 случайных пар за сессию. Выбери направление и сложность.</p>
+    </div>
+
+    <div class="controls">
+      <div class="toggle-row">
+        <div class="fill-label mono">Сложность</div>
+        <div class="difficulty-toggle" id="tr-cfg-diff">
+          <button data-value="easy">Лёгкая · 4 варианта</button>
+          <button data-value="hard">Сложная · ввод</button>
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <div class="fill-label mono">Направление</div>
+        <div class="difficulty-toggle" id="tr-cfg-dir">
+          <button data-value="en2ru">EN → RU</button>
+          <button data-value="ru2en">RU → EN</button>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="tr-cfg-start">Начать сессию</button>
+        <button class="btn btn-ghost home-link">← На главную</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRANSLATION QUIZ ============ -->
+  <section id="screen-translation" class="screen hidden">
+    <div class="q-meta">
+      <div class="mono">модуль 02 · перевод</div>
+      <div class="stats">
+        <span class="tag" style="color: var(--ok)">✓ <span id="tr-correct">0</span></span>
+        <span class="tag" style="color: var(--danger)">✗ <span id="tr-wrong">0</span></span>
+        <span class="tag mono" id="tr-counter">0/0</span>
+      </div>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="tr-progress-fill"></div></div>
+
+    <div class="q-card">
+      <div class="q-prompt-label mono" id="tr-prompt-label">Переведи на русский:</div>
+      <div class="q-prompt serif" id="tr-prompt">—</div>
+
+      <div id="tr-options-wrap">
+        <div class="options" id="tr-options"></div>
+      </div>
+
+      <div id="tr-input-wrap" class="text-input-wrap hidden">
+        <input type="text" class="text-input" id="tr-input" autocomplete="off" spellcheck="false" placeholder="Введи ответ…">
+        <div class="text-hint mono" id="tr-hint">Enter — проверить</div>
+      </div>
+
+      <div class="feedback hidden" id="tr-feedback"></div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary hidden" id="tr-submit">Проверить</button>
+        <button class="btn btn-primary hidden" id="tr-next">Дальше →</button>
+        <button class="btn btn-ghost home-link">Прервать</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABBREVIATION CONFIG ============ -->
+  <section id="screen-abbreviation-config" class="screen hidden">
+    <div class="section-header">
+      <div class="hero-eyebrow mono">модуль 03 · настройка</div>
+      <h2 class="serif section-title">Аббревиатуры</h2>
+      <p class="section-subtitle">25 случайных аббревиатур. Развернуть в полную форму.</p>
+    </div>
+
+    <div class="controls">
+      <div class="toggle-row">
+        <div class="fill-label mono">Сложность</div>
+        <div class="difficulty-toggle" id="ab-cfg-diff">
+          <button data-value="easy">Лёгкая · 4 варианта</button>
+          <button data-value="hard">Сложная · ввод</button>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="ab-cfg-start">Начать сессию</button>
+        <button class="btn btn-ghost home-link">← На главную</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABBREVIATION QUIZ ============ -->
+  <section id="screen-abbreviation" class="screen hidden">
+    <div class="q-meta">
+      <div class="mono">модуль 03 · аббревиатуры</div>
+      <div class="stats">
+        <span class="tag" style="color: var(--ok)">✓ <span id="ab-correct">0</span></span>
+        <span class="tag" style="color: var(--danger)">✗ <span id="ab-wrong">0</span></span>
+        <span class="tag mono" id="ab-counter">0/0</span>
+      </div>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="ab-progress-fill"></div></div>
+
+    <div class="q-card">
+      <div class="q-prompt-label mono">Расшифруй:</div>
+      <div class="q-prompt serif" id="ab-prompt">—</div>
+
+      <div id="ab-options-wrap">
+        <div class="options" id="ab-options"></div>
+      </div>
+
+      <div id="ab-input-wrap" class="text-input-wrap hidden">
+        <input type="text" class="text-input" id="ab-input" autocomplete="off" spellcheck="false" placeholder="Полная форма…">
+        <div class="text-hint mono">Enter — проверить</div>
+      </div>
+
+      <div class="feedback hidden" id="ab-feedback"></div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary hidden" id="ab-submit">Проверить</button>
+        <button class="btn btn-primary hidden" id="ab-next">Дальше →</button>
+        <button class="btn btn-ghost home-link">Прервать</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEFINITIONS ============ -->
+  <section id="screen-definitions" class="screen hidden">
+    <div class="section-header">
+      <div class="hero-eyebrow mono">модуль 01 · определения</div>
+      <h2 class="serif section-title">Английские определения</h2>
+      <p class="section-subtitle">Три способа: <b>Flashcards</b> — активное вспоминание со самооценкой; <b>Fill-blanks</b> — впиши ключевые слова; <b>Список</b> — спокойный просмотр всех определений.</p>
+    </div>
+
+    <div class="topic-selector" id="def-topic-list"></div>
+
+    <div class="def-modes" id="def-modes">
+      <button data-mode="flashcard" class="active">Flashcards</button>
+      <button data-mode="fillblank">Fill the blanks</button>
+      <button data-mode="browse">Список</button>
+    </div>
+
+    <!-- ===== Flashcard view ===== -->
+    <div id="def-flashcard-view">
+      <div class="q-meta">
+        <div class="mono">самооценка: 1 — again · 2 — hard · 3 — good</div>
+        <div class="stats">
+          <span class="tag mono" id="fc-counter">0/0</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="fc-progress-fill"></div></div>
+
+      <div class="flashcard" id="fc-card">
+        <div class="flashcard-label mono" id="fc-topic">—</div>
+        <div class="flashcard-term serif" id="fc-term">—</div>
+        <div class="flashcard-hint mono" id="fc-hint">кликни или нажми Space, чтобы открыть определение</div>
+        <div class="flashcard-def" id="fc-def">—</div>
+      </div>
+
+      <div class="flashcard-actions hidden" id="fc-actions">
+        <button class="fa-btn again" id="fc-again">1 · Again</button>
+        <button class="fa-btn hard" id="fc-hard">2 · Hard</button>
+        <button class="fa-btn good" id="fc-good">3 · Good</button>
+      </div>
+
+      <div class="done-state hidden" id="fc-done">
+        <div class="serif" style="font-size: 28px; margin-bottom: 8px;">Колода пройдена.</div>
+        <div class="mono" style="color: var(--muted); margin-bottom: 20px;">Перемешать и пройти ещё раз?</div>
+        <button class="btn btn-primary" id="fc-restart">Перетасовать</button>
+      </div>
+
+      <div class="result-actions" style="margin-top: 20px;">
+        <button class="btn btn-ghost" id="fc-reveal">Открыть (Space)</button>
+        <button class="btn btn-ghost home-link">← На главную</button>
+      </div>
+    </div>
+
+    <!-- ===== Fill-in-the-blanks view ===== -->
+    <div id="def-fillblank-view" class="hidden">
+      <div class="q-meta">
+        <div class="mono">впиши ключевые слова</div>
+        <div class="stats">
+          <span class="tag" style="color: var(--ok)">✓ <span id="fb-correct">0</span></span>
+          <span class="tag mono" id="fb-counter">0/0</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="fb-progress-fill"></div></div>
+
+      <div class="fill-card" id="fb-card">
+        <div class="fill-label mono" id="fb-topic">—</div>
+        <div class="fill-term serif" id="fb-term">—</div>
+        <div class="fill-text" id="fb-text">—</div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="fb-check">Проверить (Enter)</button>
+        <button class="btn btn-ghost" id="fb-reveal">Показать ответ</button>
+        <button class="btn btn-primary hidden" id="fb-next">Дальше →</button>
+        <button class="btn btn-ghost home-link">← На главную</button>
+      </div>
+
+      <div class="done-state hidden" id="fb-done">
+        <div class="serif" style="font-size: 28px; margin-bottom: 8px;">Готово.</div>
+        <div class="mono" style="color: var(--muted); margin-bottom: 8px;">Угадано с первого раза: <span id="fb-done-score">0/0</span></div>
+        <button class="btn btn-primary" id="fb-restart">Ещё раз</button>
+      </div>
+    </div>
+
+    <!-- ===== Browse view ===== -->
+    <div id="def-browse-view" class="hidden">
+      <div class="def-list" id="def-browse-list"></div>
+      <div class="result-actions" style="margin-top: 28px;">
+        <button class="btn btn-ghost home-link">← На главную</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="screen-result" class="screen hidden">
+    <div class="result">
+      <div class="result-eyebrow mono">сессия завершена</div>
+      <div class="result-score serif" id="result-score">0<span class="total">/0</span></div>
+      <div class="result-text" id="result-text">—</div>
+      <div class="result-actions">
+        <button class="btn btn-primary" id="result-again">Ещё раз</button>
+        <button class="btn btn-ghost hidden" id="result-mistakes">Повторить ошибки</button>
+        <button class="btn btn-ghost home-link">← На главную</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="data-abbreviations.js"></script>
+<script src="data-translations.js"></script>
+<script src="data-definitions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
